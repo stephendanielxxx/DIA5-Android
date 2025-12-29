@@ -9,28 +9,91 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import app.training.android.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(binding.root.paddingLeft, systemBars.top, binding.root.paddingRight, systemBars.bottom)
             insets
         }
+
         Toast.makeText(baseContext, "On Create", Toast.LENGTH_SHORT).show()
         Log.i("MainActivity", "On Create")
 
-        //implicit intent
-//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
-//        startActivity(intent)
+        binding.tvHelloWorld.text = "Welcome, Stephen !!!"
 
-        //explicit intent
-        val secondIntent = Intent(this, SecondActivity::class.java)
-        secondIntent.putExtra("phone", "123456")
-        startActivity(secondIntent)
+        binding.btnOpenLink.setOnClickListener {
+            //implicit intent
+            val link = binding.etLink.text.toString()
+            if(link.contains("http://") || link.contains("https://")){
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+                startActivity(intent)
+            }else{
+                Toast.makeText(baseContext, "Invalid link", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnSecond.setOnClickListener {
+            //explicit intent
+            val secondIntent = Intent(this, SecondActivity::class.java)
+            secondIntent.putExtra("phone", "123456")
+            startActivity(secondIntent)
+        }
+
+        binding.ivProfile.setImageResource(R.drawable.dani)
+
+        binding.cbAgree.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                Toast.makeText(baseContext, "Agree",
+                    Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(baseContext, "Disagree",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.rgCarBrand.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.rbHonda -> {
+                    binding.tvCarBrand.text = "Select car brand : Honda"
+                }
+                R.id.rbToyota -> {
+                    binding.tvCarBrand.text = "Select car brand : Toyota"
+                }
+                R.id.rbSuzuki -> {
+                    binding.tvCarBrand.text = "Select car brand : Suzuki"
+                }
+            }
+        }
+
+        binding.tbOnOff.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                Toast.makeText(baseContext, "On", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(baseContext, "Off", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnSnackBar.setOnClickListener { view ->
+            val snackbar = Snackbar.make(
+                view, "This is a snackbar", Snackbar.LENGTH_SHORT
+            )
+            snackbar.setAction("Retry"){
+                Toast.makeText(baseContext, "Retry",
+                    Toast.LENGTH_SHORT).show()
+            }
+            snackbar.show()
+        }
     }
 
     override fun onStart() {
