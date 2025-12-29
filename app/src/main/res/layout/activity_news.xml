@@ -10,7 +10,8 @@
     <FrameLayout
         android:id="@+id/flHeader"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/yellow_BD7538"/>
 
@@ -24,14 +25,14 @@
         <FrameLayout
             android:id="@+id/flNews1"
             android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/black"/>
 
         <FrameLayout
             android:id="@+id/flNews2"
             android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/blue_2F80ED"/>
 

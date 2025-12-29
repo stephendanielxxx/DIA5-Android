@@ -94,6 +94,16 @@ class MainActivity : AppCompatActivity() {
             }
             snackbar.show()
         }
+
+        binding.btnNews.setOnClickListener {
+            val newsIntent = Intent(this, NewsActivity::class.java)
+            startActivity(newsIntent)
+        }
+
+        binding.btnHome.setOnClickListener {
+            val homeIntent = Intent(this, HomeActivity::class.java)
+            startActivity(homeIntent)
+        }
     }
 
     override fun onStart() {
