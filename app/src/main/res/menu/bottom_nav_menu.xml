@@ -10,11 +10,19 @@
     <item
         android:id="@+id/newsItem"
         android:enabled="true"
-        android:title="News"/>
+        android:title="News"
+        android:icon="@drawable/ic_pencil"/>
+
+    <item
+        android:id="@+id/productItem"
+        android:enabled="true"
+        android:title="Product"
+        android:icon="@drawable/ic_pencil"/>
 
     <item
         android:id="@+id/profileItem"
         android:enabled="true"
-        android:title="Profile"/>
+        android:title="Profile"
+        android:icon="@drawable/ic_pencil"/>
 
 </menu>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import app.training.android.databinding.ActivityHomeBinding
 import app.training.android.fragment.HomeFragment
 import app.training.android.fragment.NewsFragment
+import app.training.android.fragment.ProductFragment
 import app.training.android.fragment.ProfileFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -35,6 +36,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.newsItem -> {
                     showFragment(NewsFragment.newInstance("", ""), R.id.container)
+                    true
+                }
+                R.id.productItem -> {
+                    showFragment(ProductFragment(), R.id.container)
                     true
                 }
                 R.id.profileItem -> {
