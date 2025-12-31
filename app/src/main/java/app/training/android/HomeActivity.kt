@@ -11,7 +11,9 @@ import app.training.android.fragment.HomeFragment
 import app.training.android.fragment.NewsFragment
 import app.training.android.fragment.ProductFragment
 import app.training.android.fragment.ProfileFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
 

@@ -7,11 +7,14 @@ import androidx.lifecycle.viewModelScope
 import app.training.android.api.ProductRepository
 import app.training.android.api.ProductResponse
 import app.training.android.api.RetrofitService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductViewModel: ViewModel() {
-    private val apiService = RetrofitService.getApiService()
-    private val productRepository = ProductRepository(apiService)
+@HiltViewModel
+class ProductViewModel @Inject constructor(
+    private val productRepository: ProductRepository
+): ViewModel() {
 
     private val productMutableLiveData = MutableLiveData<List<ProductResponse>>()
     val productLiveData: LiveData<List<ProductResponse>> = productMutableLiveData
@@ -20,13 +23,6 @@ class ProductViewModel: ViewModel() {
         viewModelScope.launch {
             val product = productRepository.getProducts()
             productMutableLiveData.value = product
-        }
-    }
-
-    fun getProductDetail(id: Int){
-        viewModelScope.launch {
-            val product = productRepository.getProduct(id)
-            productMutableLiveData.value = listOf(product)
         }
     }
 }

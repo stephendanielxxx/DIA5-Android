@@ -1,7 +1,10 @@
 package app.training.android.api
 
-class ProductRepository(private val apiService: FakeStoreApi) {
+import javax.inject.Inject
 
+class ProductRepository @Inject constructor(
+    private val apiService: FakeStoreApi
+) {
     suspend fun getProducts(): List<ProductResponse>{
         return apiService.getProducts()
     }

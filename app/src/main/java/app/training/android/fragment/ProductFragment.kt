@@ -14,8 +14,9 @@ import app.training.android.adapter.ProductAdapter
 import app.training.android.api.ProductResponse
 import app.training.android.databinding.FragmentProductBinding
 import app.training.android.viewmodel.ProductViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProductFragment : Fragment(), ProductAdapter.ProductListener {
     private lateinit var binding: FragmentProductBinding
     private val viewModel: ProductViewModel by viewModels()

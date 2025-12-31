@@ -9,7 +9,9 @@ import androidx.core.view.WindowInsetsCompat
 import app.training.android.databinding.ActivityProductBinding
 import app.training.android.viewmodel.ProductDetailViewModel
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductBinding
     private val viewModel: ProductDetailViewModel by viewModels()
