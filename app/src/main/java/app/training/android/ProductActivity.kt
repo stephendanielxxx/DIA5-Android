@@ -1,6 +1,7 @@
 package app.training.android
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,7 @@ class ProductActivity : AppCompatActivity() {
 
         val productId = intent.getIntExtra("productId", 0)
         viewModel.getProductDetail(productId)
+
         setObserver()
     }
 
@@ -43,6 +45,15 @@ class ProductActivity : AppCompatActivity() {
                 Glide.with(this)
                     .load(product.image)
                     .into(binding.ivProduct)
+
+                binding.btnFavourite.setOnClickListener {
+                    viewModel.saveProduct(product)
+                    Toast.makeText(this, "Product saved", Toast.LENGTH_SHORT).show()
+                }
+                binding.btnUnFavourite.setOnClickListener {
+                    viewModel.deleteProduct(product)
+                    Toast.makeText(this, "Product deleted", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
