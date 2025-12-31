@@ -1,6 +1,7 @@
 package app.training.android
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,6 +12,7 @@ import app.training.android.fragment.HomeFragment
 import app.training.android.fragment.NewsFragment
 import app.training.android.fragment.ProductFragment
 import app.training.android.fragment.ProfileFragment
+import app.training.android.utils.SharedPrefHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,6 +56,8 @@ class HomeActivity : AppCompatActivity() {
 
         binding.bottomNav.selectedItemId = R.id.homeItem
 //        showFragment(HomeFragment.newInstance("", ""), R.id.container)
+        val userName = SharedPrefHelper(this).getString("userName")
+        Log.i("HomeActivity", "userName: $userName")
     }
 
     private fun showFragment(fragment: Fragment, containerId: Int) {

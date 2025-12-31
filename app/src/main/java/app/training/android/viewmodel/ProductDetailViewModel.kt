@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import app.training.android.api.ProductRepository
 import app.training.android.api.ProductResponse
 import app.training.android.api.RetrofitService
+import app.training.android.api.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val userRepository: UserRepository
 ): ViewModel() {
 
     private val productMutableLiveData = MutableLiveData<ProductResponse>()

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.training.android.databinding.ActivityMainBinding
+import app.training.android.utils.SharedPrefHelper
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -104,6 +105,9 @@ class MainActivity : AppCompatActivity() {
             val homeIntent = Intent(this, HomeActivity::class.java)
             startActivity(homeIntent)
         }
+
+        SharedPrefHelper(this).saveString("userName", "Stephen")
+        //DataStore
     }
 
     override fun onStart() {
