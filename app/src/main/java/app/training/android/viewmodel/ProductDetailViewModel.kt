@@ -10,6 +10,8 @@ import app.training.android.api.ProductResponse
 import app.training.android.api.UserRepository
 import app.training.android.entity.Product
 import app.training.android.room.AppDatabase
+import app.training.android.utils.ApiException
+import app.training.android.utils.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,13 +23,18 @@ class ProductDetailViewModel @Inject constructor(
     private val appDatabase: AppDatabase
 ): ViewModel() {
 
-    private val productMutableLiveData = MutableLiveData<ProductResponse>()
-    val productLiveData: LiveData<ProductResponse> = productMutableLiveData
+    private val productMutableLiveData = MutableLiveData<ViewState<ProductResponse>>()
+    val productLiveData: LiveData<ViewState<ProductResponse>> = productMutableLiveData
 
     fun getProductDetail(id: Int){
+//        productMutableLiveData.value = ViewState.loading()
         viewModelScope.launch {
-            val product = productRepository.getProduct(id)
-            productMutableLiveData.value = product
+            try {
+                val product = productRepository.getProduct(id)
+                productMutableLiveData.value = ViewState.success(product)
+            }catch (e: ApiException){
+                productMutableLiveData.value = ViewState.error(e.message)
+            }
         }
     }
 

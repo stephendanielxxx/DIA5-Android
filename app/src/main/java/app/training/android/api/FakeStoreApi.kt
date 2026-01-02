@@ -1,5 +1,6 @@
 package app.training.android.api
 
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -9,5 +10,5 @@ interface FakeStoreApi {
     suspend fun getProducts(): List<ProductResponse>
 
     @GET("products/{id}")
-    suspend fun getProduct(@Path("id") id: Int): ProductResponse
+    suspend fun getProduct(@Path("id") id: Int): Response<ProductResponse>
 }

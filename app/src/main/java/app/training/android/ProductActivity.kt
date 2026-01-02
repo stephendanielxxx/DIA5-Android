@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.training.android.databinding.ActivityProductBinding
+import app.training.android.utils.ResponseStatus
 import app.training.android.viewmodel.ProductDetailViewModel
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,23 +37,36 @@ class ProductActivity : AppCompatActivity() {
 
     private fun setObserver(){
         viewModel.productLiveData.observe(this){
-            it.let { product ->
-                binding.tvTitle.text = product.title
-                binding.tvPrice.text = "Price $${product.price}"
-                binding.tvCategory.text = "Category: ${product.category}"
-                binding.tvRating.text = "Rating: ${product.rating.rate.toString()}"
-                binding.tvDesc.text = product.description
-                Glide.with(this)
-                    .load(product.image)
-                    .into(binding.ivProduct)
+            when(it.responseStatus){
+                ResponseStatus.SUCCESS -> {
+                    it.data?.let { product ->
+                        binding.tvTitle.text = product.title
+                        binding.tvPrice.text = "Price $${product.price}"
+                        binding.tvCategory.text = "Category: ${product.category}"
+                        binding.tvRating.text = "Rating: ${product.rating.rate.toString()}"
+                        binding.tvDesc.text = product.description
+                        Glide.with(this)
+                            .load(product.image)
+                            .into(binding.ivProduct)
 
-                binding.btnFavourite.setOnClickListener {
-                    viewModel.saveProduct(product)
-                    Toast.makeText(this, "Product saved", Toast.LENGTH_SHORT).show()
+                        binding.btnFavourite.setOnClickListener {
+                            viewModel.saveProduct(product)
+                            Toast.makeText(this, "Product saved", Toast.LENGTH_SHORT).show()
+                        }
+                        binding.btnUnFavourite.setOnClickListener {
+                            viewModel.deleteProduct(product)
+                            Toast.makeText(this, "Product deleted", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
-                binding.btnUnFavourite.setOnClickListener {
-                    viewModel.deleteProduct(product)
-                    Toast.makeText(this, "Product deleted", Toast.LENGTH_SHORT).show()
+                ResponseStatus.ERROR -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                }
+                ResponseStatus.LOADING -> {
+                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show()
                 }
             }
         }
